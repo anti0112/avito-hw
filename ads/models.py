@@ -1,15 +1,31 @@
 from django.db import models
 
-class Ads(models.Model):
-    Id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=2000)
-    author = models.CharField(max_length=2000)
-    price = models.IntegerField()
-    description = models.TextField()
-    address = models.TextField()
-    is_published = models.BooleanField(default=False)
+from users.models import User
 
-class Categories(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
+    def __str__(self):
+        return self.name
+
+
+class Ad(models.Model):
+    Id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.PositiveIntegerField()
+    description = models.TextField(max_length=1000, null=True)
+    is_published = models.BooleanField(default=False)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to="ads/", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Объявление"
+        verbose_name_plural = "Объявления"
+
+    def __str__(self):
+        return self.name

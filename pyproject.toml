@@ -7,6 +7,8 @@ authors = ["Danil Galkin <pixell_tm@bk.ru>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Django = "3.*"
+psycopg2 = "^2.9.3"
+Pillow = "^9.2.0"
 
 [tool.poetry.dev-dependencies]
 
